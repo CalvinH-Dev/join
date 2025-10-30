@@ -1,3 +1,4 @@
+import { CdkDragDrop, DragDropModule, transferArrayItem } from "@angular/cdk/drag-drop";
 import { CommonModule } from "@angular/common";
 import {
 	Component,
@@ -10,9 +11,7 @@ import {
 } from "@angular/core";
 import { Firestore } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
-import { CdkDragDrop, DragDropModule, transferArrayItem } from "@angular/cdk/drag-drop";
 
-import { Button } from "@shared/components/button/button";
 import { SearchField } from "@shared/components/search-field/search-field";
 import { SvgButton } from "@shared/components/svg-button/svg-button";
 import { ToastService } from "@shared/services/toast.service";
@@ -44,16 +43,7 @@ const ALL_STATUS_KEYS: TaskStatusKey[] = ["todo", "in-progress", "awaiting-feedb
  */
 @Component({
 	selector: "app-board-view",
-	imports: [
-		CommonModule,
-		Button,
-		SearchField,
-		BoardCard,
-		TaskView,
-		EditTask,
-		DragDropModule,
-		SvgButton,
-	],
+	imports: [CommonModule, SearchField, BoardCard, TaskView, EditTask, DragDropModule, SvgButton],
 	templateUrl: "./board-view.html",
 	styleUrl: "./board-view.scss",
 	standalone: true,

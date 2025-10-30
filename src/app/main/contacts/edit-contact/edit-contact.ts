@@ -103,7 +103,7 @@ export class EditContact implements OnInit {
 					Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
 				],
 			],
-			phone: ["", [Validators.required, Validators.pattern(/^\+?[0-9\s\-]{7,15}$/)]],
+			phone: ["", [Validators.required, Validators.pattern(/^\+?[0-9\s-]{7,15}$/)]],
 		});
 	}
 
@@ -202,7 +202,7 @@ export class EditContact implements OnInit {
 			}
 
 			this.closeOverlay();
-		} catch (err) {
+		} catch {
 			this.toastService.showError("Failed to save contact. Please try again.");
 		}
 	}
@@ -227,7 +227,7 @@ export class EditContact implements OnInit {
 			await this.contactService.deleteContact(this.contactId);
 			this.toastService.showSuccess("Contact deleted successfully");
 			this.closeOverlay();
-		} catch (error) {
+		} catch {
 			this.toastService.showError("Failed to delete contact. Please try again.");
 		}
 	}

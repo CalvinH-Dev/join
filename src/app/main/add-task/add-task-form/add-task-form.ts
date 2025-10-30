@@ -1,5 +1,14 @@
 import { CommonModule } from "@angular/common";
-import { Component, ElementRef, HostListener, inject, input, output, signal } from "@angular/core";
+import {
+	Component,
+	ElementRef,
+	HostListener,
+	inject,
+	input,
+	OnInit,
+	output,
+	signal,
+} from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatNativeDateModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
@@ -11,6 +20,14 @@ import { Task } from "@core/interfaces/task";
 import { ContactService } from "@core/services/contact-service";
 import { TaskService } from "@core/services/task-service";
 import { Toast } from "@shared/components/toast/toast";
+
+interface Subtask {
+	id: string;
+	title: string;
+	completed: boolean;
+	createdAt?: Date;
+	isEditing?: boolean;
+}
 
 /**
  * The AddTaskForm component provides a full-featured form
@@ -33,7 +50,7 @@ import { Toast } from "@shared/components/toast/toast";
 	templateUrl: "./add-task-form.html",
 	styleUrl: "./add-task-form.scss",
 })
-export class AddTaskForm {
+export class AddTaskForm implements OnInit {
 	/**
 	 * Category in which the new task will be added.
 	 * Defaults to `"todo"`.
@@ -55,13 +72,7 @@ export class AddTaskForm {
 	/**
 	 * List of subtasks belonging to the current task being created.
 	 */
-	subtasks: {
-		id: string;
-		title: string;
-		completed: boolean;
-		createdAt?: Date;
-		isEditing?: boolean;
-	}[] = [];
+	subtasks: Subtask[] = [];
 
 	/**
 	 * All available contacts fetched from the ContactService.
@@ -270,7 +281,7 @@ export class AddTaskForm {
 		};
 
 		try {
-			const taskId = await this.taskService.addTask(newTask);
+			await this.taskService.addTask(newTask);
 			this.showToast("Task added to board", "success");
 			this.clearForm();
 			this.addedTask.emit();
@@ -317,7 +328,8 @@ export class AddTaskForm {
 	 * Enables edit mode for a subtask.
 	 * @param {any} subtask - The subtask object being edited.
 	 */
-	editSubtask(subtask: any) {
+	editSubtask(subtask: Subtask) {
+		if (!subtask) return;
 		subtask.isEditing = true;
 	}
 
@@ -325,7 +337,7 @@ export class AddTaskForm {
 	 * Saves a subtask’s edited title and exits edit mode.
 	 * @param {any} subtask - The subtask object being saved.
 	 */
-	saveSubtask(subtask: any) {
+	saveSubtask(subtask: Subtask) {
 		if (!subtask.title?.trim()) return;
 		subtask.title = subtask.title.trim();
 		subtask.isEditing = false;

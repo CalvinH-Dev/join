@@ -25,7 +25,7 @@ export class Login {
 	errorMessage: string | null = null;
 
 	/** Indicates whether a login request is in progress */
-	isLoading: boolean = false;
+	isLoading = false;
 
 	/** Reactive login form with email and password fields */
 	loginForm = new FormGroup({
@@ -96,7 +96,7 @@ export class Login {
 		this.isLoading = true;
 
 		this.authService.signInAsGuest().subscribe({
-			error: (error) => {
+			error: () => {
 				this.isLoading = false;
 				this.errorMessage = "Error with guest login.";
 				this.toastService.showError("Guest Login Error", "The anonymous login failed.");

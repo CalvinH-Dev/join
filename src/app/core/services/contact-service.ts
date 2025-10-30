@@ -76,7 +76,7 @@ export class ContactService {
 
 			// Create shared Observable stream for all contacts
 			this.allContacts$ = collectionData(contactsCol, { idField: "id" }).pipe(
-				map((rawContacts: any[]) => {
+				map((rawContacts) => {
 					// Transform raw Firestore data to Contact objects
 					return rawContacts.map((rawContact) => this.buildDocument(rawContact.id, rawContact));
 				}),
@@ -150,7 +150,7 @@ export class ContactService {
 	 *
 	 * @param contactId - Firestore document ID of the contact
 	 */
-	getDocumentById(contactId: string) {
+	getDocumentById() {
 		// For backward compatibility, we'll just subscribe and ignore
 		// Components should migrate to using getContactById() Observable
 		console.warn(

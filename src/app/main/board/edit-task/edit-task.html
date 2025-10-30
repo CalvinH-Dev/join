@@ -1,6 +1,6 @@
-<div class="main" (click)="onOverlayClick($event)">
+<div class="main" (click)="onOverlayClick($event)" (keyup)="onOverlayClick($event)" tabindex="0">
 	<header class="task-header">
-		<div class="close" (click)="closeEditOverlay()">
+		<div class="close" (click)="closeEditOverlay()" (keyup)="closeEditOverlay()" tabindex="0">
 			<img src="images/assets/close_cross.svg" alt="" />
 		</div>
 	</header>
@@ -8,7 +8,7 @@
 	<div class="content">
 		<div class="form-scroll" role="region" aria-label="Edit task form">
 			<div class="form-row">
-				<label class="label">Title <span class="required"></span></label>
+				<label class="label" for="edittask-title">Title <span class="required"></span></label>
 				<input
 					class="input text-input"
 					type="text"
@@ -20,6 +20,7 @@
 					(focus)="titleFocus = true"
 					(blur)="titleFocus = false"
 					[ngClass]="{ focus: titleFocus, error: titleInput.invalid && titleInput.touched }"
+					id="edittask-title"
 				/>
 
 				<div class="field-error" *ngIf="titleInput.invalid && titleInput.touched">
@@ -28,7 +29,7 @@
 			</div>
 
 			<div class="form-row description-row">
-				<label class="label">Description</label>
+				<label class="label" for="edittask-description">Description</label>
 				<div class="textarea-wrap">
 					<textarea
 						class="input textarea-input"
@@ -38,12 +39,13 @@
 						(focus)="descriptionFocus = true"
 						(blur)="descriptionFocus = false"
 						[ngClass]="{ focus: descriptionFocus }"
+						id="edittask-description"
 					></textarea>
 				</div>
 			</div>
 
 			<div class="form-row">
-				<label class="label">Due date <span class="required"></span></label>
+				<label class="label" for="edittask-duedate">Due date <span class="required"></span></label>
 				<div class="input-with-icon">
 					<input
 						[min]="today"
@@ -59,6 +61,7 @@
 						required
 						matInput
 						[matDatepicker]="picker"
+						id="edittask-duedate"
 					/>
 					<button
 						class="icon-btn date-icon"
@@ -72,22 +75,23 @@
 				</div>
 
 				<div class="form-row">
-					<label class="label">Priority</label>
+					<label class="label" for="edittask-priority">Priority</label>
 
-					<div class="priority-row" role="tablist" aria-label="Priority">
+					<div class="priority-row" role="tablist" aria-label="Priority" id="edittask-priority">
 						<button
 							class="prio-btn prio-urgent"
 							[class.active]="selectedPriority === 'urgent'"
 							(click)="setPriority('urgent')"
 						>
 							<span class="prio-text">Urgent</span>
-							<span class="prio-ico" aria-hidden>
+							<span class="prio-ico" aria-hidden="true">
 								<img
 									[src]="
 										selectedPriority === 'urgent'
 											? 'images/add_task_section/prio_alta_white.svg'
 											: 'images/add_task_section/prio_alta_red.svg'
 									"
+									alt="High Priority"
 								/>
 							</span>
 						</button>
@@ -98,13 +102,14 @@
 							(click)="setPriority('medium')"
 						>
 							<span class="prio-text">Medium</span>
-							<span class="prio-ico" aria-hidden>
+							<span class="prio-ico" aria-hidden="true">
 								<img
 									[src]="
 										selectedPriority === 'medium'
 											? 'images/add_task_section/priority_symbols_white.svg'
 											: 'images/add_task_section/priority_symbols.svg'
 									"
+									alt="Medium Priority"
 								/>
 							</span>
 						</button>
@@ -115,13 +120,14 @@
 							(click)="setPriority('low')"
 						>
 							<span class="prio-text">Low</span>
-							<span class="prio-ico" aria-hidden>
+							<span class="prio-ico" aria-hidden="true">
 								<img
 									[src]="
 										selectedPriority === 'low'
 											? 'images/add_task_section/prio_baja_white.svg'
 											: 'images/add_task_section/prio_baja.svg'
 									"
+									alt="Low Priority"
 								/>
 							</span>
 						</button>
@@ -129,12 +135,17 @@
 				</div>
 
 				<div class="form-row">
-					<label class="label">Assigned to</label>
-					<div class="select-wrap" [class.focus]="assignedFocus">
-						<div class="select-input" (click)="toggleAssignedDropdown($event)" tabindex="0">
+					<label class="label" for="edittask-assigned">Assigned to</label>
+					<div class="select-wrap" [class.focus]="assignedFocus" id="edittask-assigned">
+						<div
+							class="select-input"
+							(click)="toggleAssignedDropdown($event)"
+							(keyup)="toggleAssignedDropdown($event)"
+							tabindex="0"
+						>
 							Select contacts to assign
 							<span class="select-arrow">
-								<img src="images/add_task_section/arrow_drop_downaa.svg" />
+								<img src="images/add_task_section/arrow_drop_downaa.svg" alt="Drop Down Arrow" />
 							</span>
 						</div>
 
@@ -180,18 +191,21 @@
 				</div>
 
 				<div class="form-row">
-					<label class="label">Category <span class="required"></span></label>
-					<div class="select-wrap" [class.focus]="categoryFocus">
+					<label class="label" for="edittask-category"
+						>Category <span class="required"></span
+					></label>
+					<div class="select-wrap" [class.focus]="categoryFocus" id="edittask-category">
 						<div
 							class="select-input"
 							(click)="onCategoryClick()"
+							(keyup)="onCategoryClick()"
 							(focus)="categoryFocus = true"
 							(blur)="categoryFocus = false; categoryTouched = true"
 							tabindex="0"
 						>
 							{{ category || "Select task category" }}
-							<span class="select-arrow" aria-hidden>
-								<img src="images/add_task_section/arrow_drop_downaa.svg" />
+							<span class="select-arrow" aria-hidden="true">
+								<img src="images/add_task_section/arrow_drop_downaa.svg" alt="Drop Down Arrow" />
 							</span>
 						</div>
 
@@ -199,7 +213,9 @@
 							<li
 								*ngFor="let cat of ['User Story', 'Technical Task']"
 								(click)="selectCategory(cat)"
+								(keyup)="selectCategory(cat)"
 								[class.active]="activeCategory === cat"
+								tabindex="0"
 							>
 								{{ cat }}
 							</li>
@@ -210,9 +226,9 @@
 				</div>
 
 				<div class="form-row">
-					<label class="label">Subtasks</label>
+					<label class="label" for="edittask-subtasks">Subtasks</label>
 
-					<div class="subtask-input-group">
+					<div class="subtask-input-group" id="edittask-subtasks">
 						<input
 							class="input subtask-input"
 							type="text"
@@ -285,7 +301,7 @@
 		<footer class="task-actions">
 			<div class="form-actions" role="toolbar" aria-label="Form actions">
 				<button class="btn-create" type="button" (click)="saveTask()">
-					OK <img src="images/assets/check.svg" />
+					OK <img src="images/assets/check.svg" alt="Check Icon" />
 				</button>
 			</div>
 		</footer>

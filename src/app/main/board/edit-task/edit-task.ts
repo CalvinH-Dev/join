@@ -1,9 +1,11 @@
 import { CommonModule } from "@angular/common";
 import {
+	AfterViewInit,
 	Component,
 	ElementRef,
 	EventEmitter,
 	Input,
+	OnInit,
 	Output,
 	Renderer2,
 	inject,
@@ -33,16 +35,14 @@ import { ContactService } from "@core/services/contact-service";
 	templateUrl: "./edit-task.html",
 	styleUrl: "./edit-task.scss",
 })
-export class EditTask {
+export class EditTask implements AfterViewInit, OnInit {
 	/**
 	 * Creates an instance of EditTask.
 	 * @param elementRef Reference to the component's DOM element.
 	 * @param renderer Angular renderer for DOM manipulation.
 	 */
-	constructor(
-		private elementRef: ElementRef,
-		private renderer: Renderer2,
-	) {}
+	private elementRef = inject(ElementRef);
+	private renderer = inject(Renderer2);
 
 	/** ID of the task to be edited */
 	@Input() taskId!: string;
@@ -66,7 +66,7 @@ export class EditTask {
 	 * Toggles the assigned contacts dropdown.
 	 * @param event Mouse click event
 	 */
-	toggleAssignedDropdown(event: MouseEvent): void {
+	toggleAssignedDropdown(event: MouseEvent | KeyboardEvent): void {
 		event.stopPropagation();
 		this.categoryDropdownOpen = false;
 		this.assignedDropdownOpen = !this.assignedDropdownOpen;
@@ -76,7 +76,7 @@ export class EditTask {
 	 * Handles overlay clicks to close dropdowns if clicked outside.
 	 * @param event Mouse click event
 	 */
-	onOverlayClick(event: MouseEvent): void {
+	onOverlayClick(event: MouseEvent | KeyboardEvent): void {
 		const target = event.target as HTMLElement;
 		const clickedDropdown = target.closest(".select-wrap");
 

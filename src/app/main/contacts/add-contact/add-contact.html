@@ -1,8 +1,8 @@
 <div class="main_mobile">
 	<div class="content_mobile">
 		<div class="up">
-			<div class="close" (click)="closeOverlay()">
-				<img src="images/assets/close_cross.svg" alt="" />
+			<div class="close" (click)="closeOverlay()" (keyup)="closeOverlay()" tabindex="0">
+				<img src="images/assets/close_cross.svg" alt="Close Icon" />
 			</div>
 			<div class="head">
 				<h2>Add contact</h2>
@@ -81,8 +81,8 @@
 		<div class="middle_desktop"></div>
 
 		<div class="right_desktop">
-			<div class="close_desktop" (click)="closeOverlay()">
-				<img src="images/assets/close_cross.svg" alt="" />
+			<div class="close_desktop" (click)="closeOverlay()" (keyup)="closeOverlay()" tabindex="0">
+				<img src="images/assets/close_cross.svg" alt="Close Icon" />
 			</div>
 			<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
 				<input

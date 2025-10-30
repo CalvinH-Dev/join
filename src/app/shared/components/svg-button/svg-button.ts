@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 
 /**
  * A reusable SVG button component.
@@ -17,12 +17,12 @@ export class SvgButton {
 	 *
 	 * @event
 	 */
-	@Output() onClick = new EventEmitter<void>();
+	@Output() clicked = new EventEmitter<void>();
 
 	/**
 	 * Handles the button click and emits the `onClick` event.
 	 */
 	onButtonClick(): void {
-		this.onClick.emit();
+		this.clicked.emit();
 	}
 }

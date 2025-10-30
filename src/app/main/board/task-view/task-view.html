@@ -3,8 +3,8 @@
 		<div class="task-type">
 			<app-task-label [category]="task?.category || ''"></app-task-label>
 		</div>
-		<div class="close" (click)="closeOverlay()">
-			<img src="images/assets/close_cross.svg" alt="" />
+		<div class="close" (click)="closeOverlay()" (keyup)="closeOverlay()" tabindex="0">
+			<img src="images/assets/close_cross.svg" alt="Close Icon" />
 		</div>
 	</header>
 

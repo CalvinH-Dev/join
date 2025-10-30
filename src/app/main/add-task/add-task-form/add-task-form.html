@@ -2,7 +2,7 @@
 	<div class="form-scroll" role="region" aria-label="Add task form">
 		<div class="left-column">
 			<div class="form-row">
-				<label class="label">Title <span class="required">*</span></label>
+				<label class="label" for="addtask-title">Title <span class="required">*</span></label>
 				<input
 					class="input text-input"
 					type="text"
@@ -14,13 +14,14 @@
 					(focus)="titleFocus = true"
 					(blur)="titleFocus = false; titleTouched = true"
 					[ngClass]="{ focus: titleFocus, error: (titleTouched || formSubmitAttempted) && !title }"
+					id="addtask-title"
 				/>
 
 				<div class="field-error" *ngIf="titleTouched && !title">This field is required</div>
 			</div>
 
 			<div class="form-row description-row">
-				<label class="label">Description</label>
+				<label class="label" for="addtask-description">Description</label>
 				<div class="textarea-wrap">
 					<textarea
 						class="input textarea-input"
@@ -30,13 +31,14 @@
 						(focus)="descriptionFocus = true"
 						(blur)="descriptionFocus = false"
 						[ngClass]="{ focus: descriptionFocus }"
+						id="addtask-description"
 					></textarea>
 					<img class="recurso-icon" src="images/add_task_section/recurso.svg" alt="Recurso Icon" />
 				</div>
 			</div>
 
 			<div class="form-row">
-				<label class="label">Due date <span class="required">*</span></label>
+				<label class="label" for="addtask-duedate">Due date <span class="required">*</span></label>
 				<div class="input-with-icon">
 					<input
 						matInput
@@ -52,6 +54,7 @@
 							focus: dueDateFocus,
 							error: (dueDateTouched || formSubmitAttempted) && !dueDate,
 						}"
+						id="addtask-duedate"
 					/>
 
 					<button
@@ -74,22 +77,23 @@
 
 		<div class="right-column">
 			<div class="form-row">
-				<label class="label">Priority</label>
+				<label class="label" for="addtask-priority">Priority</label>
 
-				<div class="priority-row" role="tablist" aria-label="Priority">
+				<div class="priority-row" role="tablist" aria-label="Priority" id="addtask-priority">
 					<button
 						class="prio-btn prio-urgent"
 						[class.active]="selectedPriority === 'urgent'"
 						(click)="setPriority('urgent')"
 					>
 						<span class="prio-text">Urgent</span>
-						<span class="prio-ico" aria-hidden>
+						<span class="prio-ico" aria-hidden="true">
 							<img
 								[src]="
 									selectedPriority === 'urgent'
 										? 'images/add_task_section/prio_alta_white.svg'
 										: 'images/add_task_section/prio_alta_red.svg'
 								"
+								alt="High Priority"
 							/>
 						</span>
 					</button>
@@ -100,13 +104,14 @@
 						(click)="setPriority('medium')"
 					>
 						<span class="prio-text">Medium</span>
-						<span class="prio-ico" aria-hidden>
+						<span class="prio-ico" aria-hidden="true">
 							<img
 								[src]="
 									selectedPriority === 'medium'
 										? 'images/add_task_section/priority_symbols_white.svg'
 										: 'images/add_task_section/priority_symbols.svg'
 								"
+								alt="Medium Priority"
 							/>
 						</span>
 					</button>
@@ -117,13 +122,14 @@
 						(click)="setPriority('low')"
 					>
 						<span class="prio-text">Low</span>
-						<span class="prio-ico" aria-hidden>
+						<span class="prio-ico" aria-hidden="true">
 							<img
 								[src]="
 									selectedPriority === 'low'
 										? 'images/add_task_section/prio_baja_white.svg'
 										: 'images/add_task_section/prio_baja.svg'
 								"
+								alt="Low Priority"
 							/>
 						</span>
 					</button>
@@ -131,26 +137,29 @@
 			</div>
 
 			<div class="form-row">
-				<label class="label">Assigned to</label>
+				<label class="label" for="addtask-assigned">Assigned to</label>
 
-				<div class="select-wrap assigned-wrap" [class.focus]="assignedFocus">
+				<div class="select-wrap assigned-wrap" [class.focus]="assignedFocus" id="addtask-assigned">
 					<div
 						class="select-input"
 						(click)="onInputClick()"
+						(keyup)="onInputClick()"
 						(focus)="assignedFocus = true"
 						(blur)="assignedFocus = false"
 						tabindex="0"
 					>
 						Select contacts to assign
-						<span class="select-arrow" aria-hidden>
+						<span class="select-arrow" aria-hidden="true">
 							<img src="images/add_task_section/arrow_drop_downaa.svg" alt="" />
 						</span>
 					</div>
 
 					<ul class="dropdown-list" *ngIf="assignedDropdownOpen">
 						<li
+							tabindex="0"
 							*ngFor="let contact of contacts"
 							(click)="$event.stopPropagation(); toggleAssigned(contact)"
+							(keyup)="$event.stopPropagation(); toggleAssigned(contact)"
 							[class.selected]="isAssigned(contact)"
 							class="dropdown-item"
 						>
@@ -178,11 +187,12 @@
 			</div>
 
 			<div class="form-row">
-				<label class="label">Category <span class="required">*</span></label>
-				<div class="select-wrap category-wrap" [class.focus]="categoryFocus">
+				<label class="label" for="addtask-category">Category <span class="required">*</span></label>
+				<div class="select-wrap category-wrap" [class.focus]="categoryFocus" id="addtask-category">
 					<div
 						class="select-input"
 						(click)="onCategoryClick()"
+						(keyup)="onCategoryClick()"
 						(blur)="categoryTouched = true"
 						tabindex="0"
 						(focus)="categoryFocus = true"
@@ -190,15 +200,17 @@
 						[ngClass]="{ focus: categoryFocus, error: categoryTouched && !category }"
 					>
 						{{ category || "Select task category" }}
-						<span class="select-arrow" aria-hidden>
-							<img src="images/add_task_section/arrow_drop_downaa.svg" />
+						<span class="select-arrow" aria-hidden="true">
+							<img src="images/add_task_section/arrow_drop_downaa.svg" alt="Drop Down Arrow" />
 						</span>
 					</div>
 
 					<ul class="dropdown-list" *ngIf="categoryDropdownOpen">
 						<li
+							tabindex="0"
 							*ngFor="let cat of ['User Story', 'Technical Task']"
 							(click)="selectCategory(cat)"
+							(keyup)="selectCategory(cat)"
 							[class.active]="activeCategory === cat"
 						>
 							{{ cat }}
@@ -209,7 +221,7 @@
 			</div>
 
 			<div class="form-row subtasks-row">
-				<label class="label">Subtasks</label>
+				<label class="label" for="addtask-subtask">Subtasks</label>
 				<div class="subtask-input-wrapper">
 					<input
 						class="input text-input"
@@ -220,6 +232,7 @@
 						(focus)="subtaskFocus = true"
 						(blur)="subtaskFocus = false"
 						[ngClass]="{ focus: subtaskFocus }"
+						id="addtask-subtask"
 					/>
 
 					<div class="subtask-icons">
@@ -266,7 +279,7 @@
 			<span>*</span>Please fill the required fields
 		</div>
 		<button class="btn-clear" type="button" (click)="clearForm()">
-			Clear <img src="images/assets/cancel_icon.svg" />
+			Clear <img src="images/assets/cancel_icon.svg" alt="Cancel Icon" />
 		</button>
 		<button
 			class="btn-create"
@@ -274,7 +287,7 @@
 			(click)="createTask()"
 			[disabled]="!allRequiredFieldsFilled"
 		>
-			Create Task <img src="images/assets/check.svg" />
+			Create Task <img src="images/assets/check.svg" alt="Check Icon" />
 		</button>
 	</div>
 	<app-toast

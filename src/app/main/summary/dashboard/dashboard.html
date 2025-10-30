@@ -21,6 +21,7 @@
 							? './images/summary_section/todo-hover.svg'
 							: './images/summary_section/todo-dark-mobile.svg'
 					"
+					alt="Todo Icon"
 				/>
 			</div>
 			<div class="stat-left">
@@ -42,6 +43,7 @@
 							? './images/summary_section/check-hover.svg'
 							: './images/summary_section/check-dark-mobile.svg'
 					"
+					alt="Check Icon"
 				/>
 			</div>
 			<div class="stat-left">
@@ -55,7 +57,7 @@
 		<button class="stat-card urgent" routerLink="/board">
 			<div class="stat-left">
 				<div class="stat-icon">
-					<img src="./images/summary_section/urgent.svg" />
+					<img src="./images/summary_section/urgent.svg" alt="Urgent Icon" />
 				</div>
 				<div class="stat-count-label">
 					<div class="stat-count">{{ (counts$ | async)?.urgent ?? 0 }}</div>

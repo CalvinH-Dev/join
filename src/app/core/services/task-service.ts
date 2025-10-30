@@ -1,4 +1,4 @@
-import { inject, Injectable, Injector, OnDestroy, runInInjectionContext } from "@angular/core";
+import { inject, Injectable, Injector, runInInjectionContext } from "@angular/core";
 import { DocumentData } from "@angular/fire/compat/firestore";
 import {
 	collection,
@@ -14,7 +14,7 @@ import { Task } from "@core/interfaces/task";
 import { Observable } from "rxjs";
 import { map, shareReplay } from "rxjs/operators";
 
-type TaskDictionary = Record<string, Task[]>;
+export type TaskDictionary = Record<string, Task[]>;
 
 /**
  * Service for managing task operations including Firestore CRUD operations,
@@ -41,7 +41,7 @@ type TaskDictionary = Record<string, Task[]>;
 @Injectable({
 	providedIn: "root",
 })
-export class TaskService implements OnDestroy {
+export class TaskService {
 	// Inject Tasks-spezifische Firestore Instanz
 	firestore = inject(Firestore, { optional: true }) ?? inject(Firestore);
 	injector = inject(Injector);
@@ -88,7 +88,7 @@ export class TaskService implements OnDestroy {
 
 			// Create shared Observable stream for all tasks
 			this.allTasks$ = collectionData(tasksCol, { idField: "id" }).pipe(
-				map((rawTasks: any[]) => {
+				map((rawTasks) => {
 					// Transform raw Firestore data to Task objects
 					return rawTasks.map((rawTask) => this.buildDocument(rawTask.id, rawTask));
 				}),
@@ -184,10 +184,6 @@ export class TaskService implements OnDestroy {
 			updatedAt: data["updatedAt"] || undefined,
 			color: data["color"],
 		};
-	}
-
-	ngOnDestroy() {
-		// Cleanup if needed
 	}
 
 	/**
@@ -292,7 +288,7 @@ export class TaskService implements OnDestroy {
 				...updates,
 				updatedAt: new Date().toISOString().split("T")[0],
 			});
-		} catch (error) {
+		} catch {
 			throw new Error("Failed to update task");
 		}
 	}

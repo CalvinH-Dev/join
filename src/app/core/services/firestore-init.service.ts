@@ -10,8 +10,6 @@ import { firebaseConfig } from "@environments/environment";
 export class FirestoreInitService {
 	private firestore = inject(Firestore);
 
-	constructor() {}
-
 	/**
 	 * Initialize Firestore with sample data and schema
 	 * Runs once to populate empty collections with template data
@@ -44,8 +42,7 @@ export class FirestoreInitService {
 			console.error("[FirestoreInit] Firestore initialization failed:", error);
 			console.error("[FirestoreInit] Error details:", {
 				message: error instanceof Error ? error.message : "Unknown error",
-				code:
-					error && typeof error === "object" && "code" in error ? (error as any).code : "UNKNOWN",
+				code: error && typeof error === "object" && "code" in error ? error.code : "UNKNOWN",
 				stack: error instanceof Error ? error.stack : "No stack trace",
 			});
 			throw error;
@@ -83,8 +80,7 @@ export class FirestoreInitService {
 			console.error("[FirestoreInit] Tasks initialization failed:", error);
 			console.error("[FirestoreInit] Error details:", {
 				message: error instanceof Error ? error.message : "Unknown error",
-				code:
-					error && typeof error === "object" && "code" in error ? (error as any).code : "UNKNOWN",
+				code: error && typeof error === "object" && "code" in error ? error.code : "UNKNOWN",
 				stack: error instanceof Error ? error.stack : "No stack trace",
 			});
 			throw error;
@@ -122,8 +118,7 @@ export class FirestoreInitService {
 			console.error("[FirestoreInit] Contacts initialization failed:", error);
 			console.error("[FirestoreInit] Error details:", {
 				message: error instanceof Error ? error.message : "Unknown error",
-				code:
-					error && typeof error === "object" && "code" in error ? (error as any).code : "UNKNOWN",
+				code: error && typeof error === "object" && "code" in error ? error.code : "UNKNOWN",
 				stack: error instanceof Error ? error.stack : "No stack trace",
 			});
 			throw error;
@@ -171,7 +166,7 @@ export class FirestoreInitService {
 		}
 
 		console.log("Creating tasks collection with sample data...");
-		const sampleTasks = sampleTasksData as any[];
+		const sampleTasks = sampleTasksData;
 
 		for (const task of sampleTasks) {
 			const taskRef = doc(this.firestore, "tasks", task.id);
@@ -202,7 +197,7 @@ export class FirestoreInitService {
 		}
 
 		console.log("Creating contacts collection with sample data...");
-		const sampleContacts = sampleContactsData as any[];
+		const sampleContacts = sampleContactsData;
 
 		for (const contact of sampleContacts) {
 			const contactRef = doc(this.firestore, "contacts", contact.id);

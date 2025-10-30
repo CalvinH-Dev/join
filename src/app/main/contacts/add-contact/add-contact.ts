@@ -74,7 +74,7 @@ export class AddContact {
 				Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
 			],
 		],
-		phone: ["", [Validators.required, Validators.pattern(/^\+?[0-9\s\-]{7,15}$/)]],
+		phone: ["", [Validators.required, Validators.pattern(/^\+?[0-9\s-]{7,15}$/)]],
 	});
 
 	/** Emitted when the add contact overlay is closed */
@@ -159,7 +159,7 @@ export class AddContact {
 					this.contactForm.reset();
 					this.closeOverlay();
 				})
-				.catch((error) => {
+				.catch(() => {
 					this.ts.showError("Save error");
 				});
 		}

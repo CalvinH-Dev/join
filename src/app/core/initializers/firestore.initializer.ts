@@ -1,4 +1,3 @@
-import { inject } from "@angular/core";
 import { FirestoreInitService } from "@core/services/firestore-init.service";
 
 /**

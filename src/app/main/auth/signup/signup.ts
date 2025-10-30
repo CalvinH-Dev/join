@@ -32,14 +32,14 @@ export class Signup {
 	errorMessage: string | null = null;
 
 	/** Indicates whether a signup request is in progress */
-	isLoading: boolean = false;
+	isLoading = false;
 
 	/**
 	 * Validator to check if password and confirmPassword fields match.
 	 * @param group - The form group containing password fields.
 	 * @returns Validation error object or null.
 	 */
-	passwordMatchValidator: ValidatorFn = (group: AbstractControl): { [key: string]: any } | null => {
+	passwordMatchValidator: ValidatorFn = (group: AbstractControl): Record<string, any> | null => {
 		const password = group.get("password")?.value;
 		const confirmPassword = group.get("confirmPassword")?.value;
 
